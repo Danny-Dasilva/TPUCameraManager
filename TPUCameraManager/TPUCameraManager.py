@@ -2,8 +2,7 @@ from . import gstreamer
 import threading
 import enum
 import numpy as np
-# v4l2src device="/dev/video0" ! video/x-raw,width=640,height=480,framerate=30/1 ! videoconvert ! video/x-raw,format=I420 ! autovideosink
-
+# gst-launch-1.0 v4l2src device="/dev/video0" ! video/x-raw,width=640,height=480,framerate=30/1 ! videoconvert ! video/x-raw,format=I420 ! autovideosink
 class CameraManager:
     def __init__(self):
         self.camClasses = []
