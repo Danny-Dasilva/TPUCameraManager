@@ -2,6 +2,7 @@ from . import gstreamer
 import threading
 import enum
 import numpy as np
+# v4l2src device="/dev/video0" ! video/x-raw,width=640,height=480,framerate=30/1 ! videoconvert ! video/x-raw,format=I420 ! autovideosink
 
 class CameraManager:
     def __init__(self):
@@ -101,6 +102,6 @@ class GStreamerPipelines(enum.Enum):
     H264 = "t. ! queue max-size-buffers=1 leaky=downstream ! video/x-raw,format=YUY2,width={0},height={1},framerate={2}/1 ! videoconvert ! x264enc speed-preset=ultrafast tune=zerolatency threads=4 key-int-max=5 bitrate=1000 aud=False bframes=1 ! video/x-h264,profile=baseline ! h264parse ! video/x-h264,stream-format=byte-stream,alignment=nal ! appsink name={3} emit-signals=True max-buffers=1 drop=False sync=False"
     RGB = "t. ! queue ! glfilterbin filter=glbox ! video/x-raw,format=RGB,width={0},height={1},framerate={2}/1 ! appsink name={3} emit-signals=True max-buffers=1 drop=True sync=False"
     MJPEG = "t. ! queue ! video/x-raw,format=YUY2,width={0},height={1},framerate={2}/1 ! jpegenc quality=20 ! appsink name={3} emit-signals=True"
-
+    YUYV = "video/x-raw,width=640,height=480,framerate=30/1 ! videoconvert ! video/x-raw,format=I420 ! autovideosink"
     def __str__(self):
         return self.value
